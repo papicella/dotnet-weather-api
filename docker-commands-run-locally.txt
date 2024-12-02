@@ -1,0 +1,12 @@
+build :
+
+$ docker buildx build -t dotnetcore-weatherapi-image . --platform linux/amd64
+
+run locally mapping to local port 5059 on host to 8080 on container port:
+
+$ docker run -p 5059:8080 dotnetcore-weatherapi-image:latest
+
+access as follows :
+
+$ http http://localhost:5059/weatherforecast
+

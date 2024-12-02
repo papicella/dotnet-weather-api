@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weatherapi-app
+  namespace: apples
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weatherapi-app
+  template:
+    metadata:
+      labels:
+        app: weatherapi-app
+    spec:
+      containers:
+      - name: weatherapi-container
+        image: pasapples/dotnetcore-weatherapi-image:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: weatherapi-app
+  name: weatherapi-app
+  namespace: apples
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: weatherapi-app
+status:
+  loadBalancer: {}
